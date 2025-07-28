@@ -1,0 +1,45 @@
+9	0	M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	In file included from main.cpp
+M:\Project\Encrypt-Cry\Release-1.0.0\main	In function 'void english()':
+15	0	M:\Project\Encrypt-Cry\Release-1.0.0\kernel	In file included from kernel
+11		M:\Project\Encrypt-Cry\Release-1.0.0\conchoise.h	                 from conchoise.h
+6		M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	                 from main.cpp
+25	19	M:\Project\Encrypt-Cry\Release-1.0.0\encrypt	[Note] std::vector<long long int> encryptString(const string&, RSA_KEY)
+11	0	M:\Project\Encrypt-Cry\Release-1.0.0\conchoise.h	In file included from conchoise.h
+6		M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	                 from main.cpp
+172	19	M:\Project\Encrypt-Cry\Release-1.0.0\kernel	[Note] std::vector<long long int> encryptString(const string&, const RSA_KEY&)
+9	0	M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	In file included from main.cpp
+50	8	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] jump to case label [-fpermissive]
+51	12	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] redeclaration of 'RSA_KEY ptk'
+56	11	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] redeclaration of 'std::string text'
+58	11	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] redeclaration of 'std::string text'
+62	41	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] invalid initialization of reference of type 'const std::vector<long long int>&' from expression of type 'std::string {aka std::basic_string<char>}'
+11	0	M:\Project\Encrypt-Cry\Release-1.0.0\conchoise.h	In file included from conchoise.h
+6		M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	                 from main.cpp
+181	8	M:\Project\Encrypt-Cry\Release-1.0.0\kernel	[Note] in passing argument 1 of 'std::string decryptString(const std::vector<long long int>&, const RSA_KEY&)'
+9	0	M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	In file included from main.cpp
+M:\Project\Encrypt-Cry\Release-1.0.0\main	In function 'void chinese()':
+85	54	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] call of overloaded 'encryptString(std::string&, RSA_KEY&)' is ambiguous
+85	54	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Note] candidates are:
+15	0	M:\Project\Encrypt-Cry\Release-1.0.0\kernel	In file included from kernel
+11		M:\Project\Encrypt-Cry\Release-1.0.0\conchoise.h	                 from conchoise.h
+6		M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	                 from main.cpp
+25	19	M:\Project\Encrypt-Cry\Release-1.0.0\encrypt	[Note] std::vector<long long int> encryptString(const string&, RSA_KEY)
+11	0	M:\Project\Encrypt-Cry\Release-1.0.0\conchoise.h	In file included from conchoise.h
+6		M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	                 from main.cpp
+172	19	M:\Project\Encrypt-Cry\Release-1.0.0\kernel	[Note] std::vector<long long int> encryptString(const string&, const RSA_KEY&)
+9	0	M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	In file included from main.cpp
+91	8	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] jump to case label [-fpermissive]
+85	22	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] crosses initialization of 'std::vector<long long int> encrypted'
+81	16	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] crosses initialization of 'std::string cutmsg'
+81	11	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] crosses initialization of 'std::string text'
+92	12	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] redeclaration of 'RSA_KEY ptk'
+75	16	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Note] 'RSA_KEY ptk' previously declared here
+97	11	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] redeclaration of 'std::string text'
+81	11	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Note] 'std::string text' previously declared here
+99	11	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] redeclaration of 'std::string text'
+81	11	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Note] 'std::string text' previously declared here
+103	41	M:\Project\Encrypt-Cry\Release-1.0.0\main	[Error] invalid initialization of reference of type 'const std::vector<long long int>&' from expression of type 'std::string {aka std::basic_string<char>}'
+11	0	M:\Project\Encrypt-Cry\Release-1.0.0\conchoise.h	In file included from conchoise.h
+6		M:\Project\Encrypt-Cry\Release-1.0.0\main.cpp	                 from main.cpp
+181	8	M:\Project\Encrypt-Cry\Release-1.0.0\kernel	[Note] in passing argument 1 of 'std::string decryptString(const std::vector<long long int>&, const RSA_KEY&)'
+28		M:\Project\Encrypt-Cry\Release-1.0.0\Makefile.win	recipe for target 'main.o' failed

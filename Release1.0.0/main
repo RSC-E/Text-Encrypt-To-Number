@@ -1,0 +1,158 @@
+#pragma GCC header_system
+#pragma once
+
+#include<iostream>
+#include<conio.h>
+#include<vector>
+#include<string>
+#include<sstream> 
+
+#include "kernel"
+
+using namespace std;
+
+void english();
+void chinese();
+void pgex();
+
+vector<long long> parseEncryptedData(const string&input){
+	vector<long long> encrypted;
+	stringstream ss(input);
+	long long num;
+	while(ss>>num){
+		encrypted.push_back(num);
+	}
+	return encrypted;
+}
+
+
+void english(){
+	vector<string> v={"Encrypt Text","Decrypt Text"};
+	int choise=SelectArrowMenu(v,"Select Text Control");
+	int sel=choise+1;
+	switch(sel){
+		case 1:{
+			RSA_KEY pbk,ptk;
+			cout<<"RSA keychain is being generated...\n";
+			RandomWithRSAKey(pbk,ptk);
+			cout<<"RSA Keychains:\nPublic key(n,e):("<<pbk.modules<<','<<pbk.expec<<")\n";
+			cout<<"Warning:Please do not give out your private key\nPrivate Key(n,d):(";
+			cout<<ptk.modules<<','<<ptk.expec<<")\n";
+			string text,cutmsg="";
+			cout<<"Enter text:";
+			getline(cin,text);
+			cout<<"Please wait...\n";
+			vector<long long> encrypted=encryptString(text,pbk);
+			cout<<"Encrypted text:";
+			for(long long num:encrypted) cout<<num<<' ';
+			cout<<"\nThanks for using\n";
+			_getch();
+			break;
+		}
+		case 2:{
+			RSA_KEY ptk;
+			cout<<"Enter private key(n):";
+			cin>>ptk.modules;
+			cout<<"Enter private key(d):";
+			cin>>ptk.expec;
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');  // 清除缓冲区
+			string text;
+			cout<<"Enter encrypted text:";
+			getline(cin,text);
+			cout<<"Please wait...\n";
+			vector<long long> decrypted=parseEncryptedData(text);
+			string decrypt=decryptString(decrypted,ptk);
+			cout<<"Decrypt text:"<<decrypt;
+			cout<<"\nThanks for using";
+		}
+	}
+}
+/*
+void english(){
+	vector<string> v={"Encrypt Text","Decrypt Text"};
+	int choise=SelectArrowMenu(v,"Select Text Control");
+	int sel=choise+1;
+	cout<<sel+1;
+	switch(sel){
+		case 1:
+			RSA_KEY pbk,ptk;
+			cout<<"RSA keychain is being generated...\n";
+			RandomWithRSAKey(pbk,ptk);
+			cout<<"RSA Keychains:\nPublic key(n,e):("<<pbk.modules<<','<<pbk.expec<<")\n";
+			cout<<"Warning:Please do not give out your private key\nPrivate Key(n,d):(";
+			cout<<ptk.modules<<','<<ptk.expec<<")\n";
+			string text,cutmsg="";
+			cout<<"Enter text:";
+			getline(cin,text);
+			cout<<"Please wait...\n";
+			vector<long long> encrypted=encryptString(text,pbk);
+			cout<<"Encrypted text:";
+			for(long long num:encrypted) cout<<num<<' ';
+			cout<<"\nThanks for using\n";
+			_getch();
+			break;
+		case 2:
+			RSA_KEY ptk;
+			cout<<"Enter private key(n):";
+			cin>>ptk.modules;
+			cout<<"Enter private key(d):";
+			cin>>ptk.expec;
+			string text;
+			cout<<"Enter encrypted text:";
+			string text;
+			getline(cin,text);
+			cout<<"Please wait...\n";
+			vector<long long> decrypted=parseEncryptedData(text);
+			string decrypt=decryptString(text,ptk);
+			cout<<"Decrypt text:"<<decrypt;
+			cout<<"\nThanks for using";
+	}
+}
+*/
+
+void chinese(){
+	vector<string> v={"加密","解密"};
+	int choise=SelectArrowMenu(v,"选择操作");
+	int sel=choise+1;
+	switch(sel){
+		case 1:{
+			RSA_KEY pbk,ptk;
+			cout<<"正在生成RSA密钥串...\n";
+			RandomWithRSAKey(pbk,ptk);
+			cout<<"RSA密钥串:\n公钥(n,e):("<<pbk.modules<<','<<pbk.expec<<")\n";
+			cout<<"警告:请勿泄露私钥\n私钥(n,d):(";
+			cout<<ptk.modules<<','<<ptk.expec<<")\n";
+			string text,cutmsg="";
+			cout<<"输入欲加密文本:";
+			getline(cin,text);
+			cout<<"请稍后...\n";
+			vector<long long> encrypted=encryptString(text,pbk);
+			cout<<"加密后的文本:";
+			for(long long num:encrypted) cout<<num<<' ';
+			cout<<"\n感谢你的使用\n";
+			_getch();
+			break;
+		}
+		case 2:{
+			RSA_KEY ptk;
+			cout<<"输入私钥(n):";
+			cin>>ptk.modules;
+			cout<<"输入私钥(d):";
+			cin>>ptk.expec;
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');  // 清除缓冲区
+			string text;
+			cout<<"输入欲解密的文本:";
+			getline(cin,text);
+			cout<<"请稍后...\n";
+			vector<long long> decrypted=parseEncryptedData(text);
+			string decrypt=decryptString(decrypted,ptk);
+			cout<<"解密后的文本:"<<decrypt;
+			cout<<"\n感谢你的使用\n";
+		}
+	}
+}
+
+
+void pgex(){
+	exit(0);
+}

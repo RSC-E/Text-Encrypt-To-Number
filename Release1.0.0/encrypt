@@ -1,0 +1,26 @@
+#pragma GCC header_system
+#pragma once
+
+#include<iostream>
+#include<string>
+#include<vector>
+#include<random>
+#include<cmath>
+#include<algorithm>
+#include<numeric>
+
+#include "conchoise.h"
+#include "kernel"
+
+using namespace std; 
+
+bool IsPrime(long long n);
+long long RandomWithPrime(long long minx,long long maxx);
+long long private_gcd(long long a,long long b);
+long long extended_gcd(long long a,long long b,long long &x,long long &y);
+long long mod_inverse(long long e,long long phi);
+long long mod_pow(long long base,long long expec,long long mod);
+struct RSA_KEY;
+void RandomWithRSAKey(RSA_KEY &pb_key,RSA_KEY &pt_key);
+vector<long long> encryptString(const string& message,const RSA_KEY pb_key);
+string decryptString(const vector<long long> &encrypted,const RSA_KEY &pt_Key);

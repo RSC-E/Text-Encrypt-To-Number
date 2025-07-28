@@ -1,0 +1,210 @@
+#pragma GCC header_system
+#pragma once
+
+#include<iostream>
+#include<string>
+#include<vector>
+#include<random>
+#include<cmath>
+#include<algorithm>
+#include<numeric>
+#include<conio.h>
+#include<windows.h>
+#include<chrono>
+
+#include "conchoise.h"
+#include "encrypt"
+
+using namespace std;
+
+void SetCursorDefaultPos(POINT pos){
+	COORD coord={(SHORT)pos.x,(SHORT)pos.y};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+void HiddenCursor(){
+	CONSOLE_CURSOR_INFO curinfo;
+	curinfo.dwSize=100;
+	curinfo.bVisible=false;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE),&curinfo);
+}
+void UnHiddenCursor(){
+	CONSOLE_CURSOR_INFO curinfo;
+	curinfo.dwSize=100;
+	curinfo.bVisible=true;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE),&curinfo);
+}
+int GetArrowKeyInput(){
+	int ch=_getch();
+	if(ch==0||ch==224){
+		ch=_getch();
+		switch(ch){
+			case 72: return 1;
+			case 80: return 2;
+			case 13: return 3;
+			default: return 0;
+		}
+	}
+	else if(ch==13){
+		return 3;
+	}
+	return 0;
+}
+void DisplayConsoleMenu(const vector<string>& options, int selectedIndex,string message) {
+    system("cls");
+    cout << message << "\n";
+    for (int i = 0; i < options.size(); i++) {
+        if (i == selectedIndex) {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),
+                FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+            cout << "> " << options[i] << "\n";
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),
+                FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        }
+        else {
+            cout << "  " << options[i] << "\n";
+        }
+    }
+}
+int SelectArrowMenu(const vector<string>& options,string message) {
+    HiddenCursor();
+    int selected = 0, key = 0;
+    while (true) {
+        DisplayConsoleMenu(options, selected,message);
+        key = GetArrowKeyInput();
+        if (key == 1 && selected > 0) {
+            selected--;
+        }
+        else if (key == 2 && selected < options.size() - 1) {
+            selected++;
+        }
+        else if (key == 3) {
+            break;
+        }
+    }
+    UnHiddenCursor();
+    return selected;  // 返回用户选择的索引
+}
+
+bool IsPrime(long long n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    
+    for (long long i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) 
+            return false;
+    }
+    return true;
+}
+long long RandomWithPrime(long long minx, long long maxx) {
+    static mt19937 gen(chrono::steady_clock::now().time_since_epoch().count());
+    uniform_int_distribution<long long> dis(minx, maxx);
+    
+    long long num;
+    int attempts = 0;
+    const int MAX_ATTEMPTS = 10000; // 安全限制
+    
+    do {
+        num = dis(gen);
+        if (++attempts > MAX_ATTEMPTS) {
+            cerr << "Warning: Prime generation timeout\n";
+            return -1; // 或抛出异常
+        }
+    } while (!IsPrime(num));
+    
+    return num;
+}
+long long private_gcd(long long a,long long b){
+	while(b!=0){
+		long long temp=b;
+		b=a%b;
+		a=temp;
+	}
+	return a;
+}
+long long extended_gcd(long long a,long long b,long long &x,long long &y){
+	if(b==0){
+		x=1,y=0;
+		return a;
+	}
+	
+	long long x1,y1;
+	long long gcd=extended_gcd(b,a%b,x1,y1);
+	x=y1,y=x1-(a/b)*y1;
+	
+	return gcd;
+}
+long long mod_inverse(long long e,long long phi){
+	long long x,y;
+	extended_gcd(e,phi,x,y);
+	return(x%phi+phi)%phi;
+}
+long long mod_pow(long long base,long long expec,long long mod){
+	long long result=1;
+	base=base%mod;
+	while(expec>0){
+		if(expec%2==1) result=(result*base)%mod;
+		expec=expec>>1;
+		base=(base*base)%mod;
+	}
+	return result;
+}
+struct RSA_KEY{
+	long long modules;
+	long long expec;
+};
+void RandomWithRSAKey(RSA_KEY &pb_key, RSA_KEY &pt_key) {
+    long long p = RandomWithPrime(1000, 10000);
+    if (p == -1) return; // 处理生成失败
+    
+    long long q = RandomWithPrime(1000, 10000);
+    if (q == -1) return;
+    
+    while (p == q) {
+        q = RandomWithPrime(1000, 10000);
+        if (q == -1) return;
+    }
+
+    long long n = p * q;
+    long long phi = (p-1) * (q-1);
+
+    // 从常用素数开始尝试
+    vector<long long> common_es = {65537, 257, 17, 5, 3};
+    long long e = 0;
+    
+    for (long long candidate : common_es) {
+        if (candidate < phi && private_gcd(candidate, phi) == 1) {
+            e = candidate;
+            break;
+        }
+    }
+    
+    if (e == 0) { // 没有找到常用素数
+        e = 65537;
+        while (e < phi && private_gcd(e, phi) != 1) {
+            e++;
+        }
+    }
+
+    long long d = mod_inverse(e, phi);
+    
+    pb_key = {n, e};
+    pt_key = {n, d};
+}
+vector<long long> encryptString(const string& message,const RSA_KEY pb_key){
+	vector<long long> encrypted;
+	for(char c:message){
+		long long m=static_cast<long long>(c);
+		long long cipher=mod_pow(m,pb_key.expec,pb_key.modules);
+		encrypted.push_back(cipher);
+	}
+	return encrypted;
+}
+string decryptString(const vector<long long> &encrypted,const RSA_KEY &pt_Key){
+	string decrypted;
+	for(long long cipher:encrypted){
+		long long m=mod_pow(cipher,pt_Key.expec,pt_Key.modules);
+		decrypted+=static_cast<char>(m);
+	}
+	return decrypted;
+}
