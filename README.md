@@ -35,6 +35,6 @@ Release1.0.0:
 >This is first version.None.
 
 ### DevelopTeam 
-SYSTEM-WIN12-ZDY [Github](https://www.github.com/SYSTEM-WIN12-ZDY)
+SYSTEM-WIN12-ZDY [Github](https://www.github.com/SYSTEM-WIN12-ZDY)\
 RSC-E Studio
 
